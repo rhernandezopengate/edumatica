@@ -1,0 +1,132 @@
+﻿@model OpenGateLogistics.Models.factura
+@{
+    Layout = null;
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Editar Factura</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-3">
+                @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3">
+                <label class="control-label">Fecha Factura</label>
+                <input type="text" class="form-control" id="FechaFacturaString" name="FechaFacturaString" value="@Model.FechaFacturaString" />
+            </div>
+            <div class="col-lg-3">
+                <label class="control-label">Fecha Sello</label>
+                <input type="text" class="form-control" id="FechaSelloString" name="FechaSelloString" value="@Model.FechaSelloString" onchange="fechaVencimiento()" />
+            </div>
+            <div class="col-lg-3">
+                <label class="control-label">Fecha Vencimiento</label>
+                <input type="text" class="form-control" id="FechaVencimientoString" name="FechaVencimientoString" value="@Model.FechaVencimientoString" />
+            </div>
+            <div class="col-lg-3">
+                @Html.LabelFor(model => model.FechaPago, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.FechaPago, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3">
+                @Html.LabelFor(model => model.EstadoFactura_Id, "EstadoFactura_Id", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("EstadoFactura_Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EstadoFactura_Id, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-4">
+                @Html.LabelFor(model => model.Proveedor_Id, "Proveedor_Id", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("Proveedor_Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Proveedor_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                @Html.LabelFor(model => model.Concepto, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Concepto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.LabelFor(model => model.Subtotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th>
+                                @Html.LabelFor(model => model.Iva, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th>
+                                @Html.LabelFor(model => model.Descuento, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th>
+                                @Html.LabelFor(model => model.Retencion, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" value="@Model.Subtotal" name="Subtotal" id="Subtotal" onchange="sumar();" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" value="@Model.Iva" name="Iva" id="Iva" class="form-control" readonly />
+                            </td>
+                            <td>
+                                <input type="number" value="@Model.Descuento" name="Descuento" id="Descuento" onchange="sumar();" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="number" value="@Model.Retencion" name="Retencion" id="Retencion" onchange="sumar();" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align:right">
+                                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label" })
+                            </td>
+                            <td>
+                                <input type="number" value="@Model.Total" name="Total" id="Total" class="form-control" readonly />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.LabelFor(model => model.Observaciones, htmlAttributes: new { @class = "control-label" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" value="@Model.Observaciones" name="Observaciones" id="Observaciones" class="form-control" />
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+}
+<script src="~/Scripts/Operaciones.js"></script>
+
+
+
+

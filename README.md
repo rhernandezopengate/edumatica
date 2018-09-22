@@ -1,2 +1,0 @@
-# edumatica
-Proyecto

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OpenGateLogistics.Models.categoriaproveedor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="x_title">
+    <h2>Categoria Proveedores</h2>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "categoriaproveedors")'">
+        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Agregar Nuevo Registro
+    </button>
+    <div class="table-responsive">
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <th class="column-title">
+                        Descripcion
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcion)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.id })" title="Editar" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i>Editar </a>
+                        <a href="@Url.Action("Details", new { id = item.id })" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detalles </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>
+

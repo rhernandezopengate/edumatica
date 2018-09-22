@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbOpenGateModelStoreContainer" CdmEntityContainer="dbOpenGateEntities">
+    <EntitySetMapping Name="categoriaproveedor">
+      <EntityTypeMapping TypeName="dbOpenGateModel.categoriaproveedor">
+        <MappingFragment StoreEntitySet="categoriaproveedor">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="estadofactura">
+      <EntityTypeMapping TypeName="dbOpenGateModel.estadofactura">
+        <MappingFragment StoreEntitySet="estadofactura">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="estadoproveedor">
+      <EntityTypeMapping TypeName="dbOpenGateModel.estadoproveedor">
+        <MappingFragment StoreEntitySet="estadoproveedor">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="nacionalidadproveedor">
+      <EntityTypeMapping TypeName="dbOpenGateModel.nacionalidadproveedor">
+        <MappingFragment StoreEntitySet="nacionalidadproveedor">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="proveedor">
+      <EntityTypeMapping TypeName="dbOpenGateModel.proveedor">
+        <MappingFragment StoreEntitySet="proveedor">
+          <ScalarProperty Name="EstadoProveedor_Id" ColumnName="EstadoProveedor_Id" />
+          <ScalarProperty Name="NacionalidadProveedor_Id" ColumnName="NacionalidadProveedor_Id" />
+          <ScalarProperty Name="CategoriaProveedor_Id" ColumnName="CategoriaProveedor_Id" />
+          <ScalarProperty Name="RFC" ColumnName="RFC" />
+          <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="factura">
+      <EntityTypeMapping TypeName="dbOpenGateModel.factura">
+        <MappingFragment StoreEntitySet="factura">
+          <ScalarProperty Name="Retencion" ColumnName="Retencion" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="EstadoFactura_Id" ColumnName="EstadoFactura_Id" />
+          <ScalarProperty Name="Proveedor_Id" ColumnName="Proveedor_Id" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+          <ScalarProperty Name="Iva" ColumnName="Iva" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="DiasVencidos" ColumnName="DiasVencidos" />
+          <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+          <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+          <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+          <ScalarProperty Name="FechaSello" ColumnName="FechaSello" />
+          <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+          <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_proveedor_datosgrafica" FunctionName="dbOpenGateModel.Store.sp_proveedor_datosgrafica">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbOpenGateModel.sp_proveedor_datosgrafica_Result">
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

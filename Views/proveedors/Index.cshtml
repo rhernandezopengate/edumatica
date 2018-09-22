@@ -1,0 +1,22 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<OpenGateLogistics.Models.proveedor>
+<script src="~/Scripts/Proveedores.js"></script>
+
+<div class="x_title">
+    <h2>Proveedores</h2>
+    <div class="clearfix"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <input type="text" id="buscar" class="form-control" placeholder="Razon Social" />
+    </div>
+    <div class="col-lg-3">
+        <button onclick="filtrarProveedores()" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span> Buscar</button>
+        <a href="@Url.Action("Create")" type="submit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Agregar Nuevo Registro</a>
+    </div>
+</div>
+
+@Html.Partial("_ListaProveedores", (IPagedList<OpenGateLogistics.Models.proveedor>)Model)

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbOpenGateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="categoriaproveedor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="proveedor" Relationship="dbOpenGateModel.proveedor_categoriaproveedor_fk" FromRole="categoriaproveedor" ToRole="proveedor" />
+  </EntityType>
+  <EntityContainer Name="dbOpenGateEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categoriaproveedor" EntityType="Self.categoriaproveedor" />
+    <EntitySet Name="estadofactura" EntityType="dbOpenGateModel.estadofactura" />
+    <EntitySet Name="estadoproveedor" EntityType="dbOpenGateModel.estadoproveedor" />
+    <EntitySet Name="nacionalidadproveedor" EntityType="dbOpenGateModel.nacionalidadproveedor" />
+    <EntitySet Name="proveedor" EntityType="dbOpenGateModel.proveedor" />
+    <AssociationSet Name="proveedor_categoriaproveedor_fk" Association="dbOpenGateModel.proveedor_categoriaproveedor_fk">
+      <End Role="categoriaproveedor" EntitySet="categoriaproveedor" />
+      <End Role="proveedor" EntitySet="proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="proveedor_estadoproveedor_fk" Association="dbOpenGateModel.proveedor_estadoproveedor_fk">
+      <End Role="estadoproveedor" EntitySet="estadoproveedor" />
+      <End Role="proveedor" EntitySet="proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="proveedor_nacionalidadproveedor_fk" Association="dbOpenGateModel.proveedor_nacionalidadproveedor_fk">
+      <End Role="nacionalidadproveedor" EntitySet="nacionalidadproveedor" />
+      <End Role="proveedor" EntitySet="proveedor" />
+    </AssociationSet>
+    <FunctionImport Name="SP_BUSQUEDA_PROVEEDORES" ReturnType="Collection(dbOpenGateModel.SP_BUSQUEDA_PROVEEDORES_Result)">
+      <Parameter Name="Proveedores" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="factura" EntityType="dbOpenGateModel.factura" />
+    <AssociationSet Name="factura_estadofacturas_fk" Association="dbOpenGateModel.factura_estadofacturas_fk">
+      <End Role="estadofactura" EntitySet="estadofactura" />
+      <End Role="factura" EntitySet="factura" />
+    </AssociationSet>
+    <AssociationSet Name="factura_proveedor_fk" Association="dbOpenGateModel.factura_proveedor_fk">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="factura" EntitySet="factura" />
+    </AssociationSet>
+    <FunctionImport Name="sp_proveedor_datosgrafica" ReturnType="Collection(dbOpenGateModel.sp_proveedor_datosgrafica_Result)" />
+  </EntityContainer>
+  <EntityType Name="estadofactura">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="factura" Relationship="dbOpenGateModel.factura_estadofacturas_fk" FromRole="estadofactura" ToRole="factura" />
+  </EntityType>
+  <EntityType Name="estadoproveedor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="proveedor" Relationship="dbOpenGateModel.proveedor_estadoproveedor_fk" FromRole="estadoproveedor" ToRole="proveedor" />
+  </EntityType>
+  <EntityType Name="nacionalidadproveedor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="proveedor" Relationship="dbOpenGateModel.proveedor_nacionalidadproveedor_fk" FromRole="nacionalidadproveedor" ToRole="proveedor" />
+  </EntityType>
+  <EntityType Name="proveedor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RFC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategoriaProveedor_Id" Type="Int32" Nullable="false" />
+    <Property Name="NacionalidadProveedor_Id" Type="Int32" Nullable="false" />
+    <Property Name="EstadoProveedor_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="categoriaproveedor" Relationship="dbOpenGateModel.proveedor_categoriaproveedor_fk" FromRole="proveedor" ToRole="categoriaproveedor" />
+    <NavigationProperty Name="estadoproveedor" Relationship="dbOpenGateModel.proveedor_estadoproveedor_fk" FromRole="proveedor" ToRole="estadoproveedor" />
+    <NavigationProperty Name="nacionalidadproveedor" Relationship="dbOpenGateModel.proveedor_nacionalidadproveedor_fk" FromRole="proveedor" ToRole="nacionalidadproveedor" />
+    <NavigationProperty Name="factura" Relationship="dbOpenGateModel.factura_proveedor_fk" FromRole="proveedor" ToRole="factura" />
+  </EntityType>
+  <Association Name="proveedor_categoriaproveedor_fk">
+    <End Type="dbOpenGateModel.categoriaproveedor" Role="categoriaproveedor" Multiplicity="1" />
+    <End Type="dbOpenGateModel.proveedor" Role="proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriaproveedor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="proveedor">
+        <PropertyRef Name="CategoriaProveedor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="proveedor_estadoproveedor_fk">
+    <End Type="dbOpenGateModel.estadoproveedor" Role="estadoproveedor" Multiplicity="1" />
+    <End Type="dbOpenGateModel.proveedor" Role="proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estadoproveedor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="proveedor">
+        <PropertyRef Name="EstadoProveedor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="proveedor_nacionalidadproveedor_fk">
+    <End Type="dbOpenGateModel.nacionalidadproveedor" Role="nacionalidadproveedor" Multiplicity="1" />
+    <End Type="dbOpenGateModel.proveedor" Role="proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nacionalidadproveedor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="proveedor">
+        <PropertyRef Name="NacionalidadProveedor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="SP_BUSQUEDA_PROVEEDORES_Result">
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="RazonSocial" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="RFC" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CategoriaProveedor_Id" Nullable="false" />
+    <Property Type="Int32" Name="NacionalidadProveedor_Id" Nullable="false" />
+    <Property Type="Int32" Name="EstadoProveedor_Id" Nullable="false" />
+    <Property Type="String" Name="Categoria" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Nacionalidad" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Estado" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="factura">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroFactura" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="FechaFactura" Type="DateTime" Precision="0" />
+    <Property Name="FechaSello" Type="DateTime" Precision="0" />
+    <Property Name="FechaVencimiento" Type="DateTime" Precision="0" />
+    <Property Name="FechaPago" Type="DateTime" Precision="0" />
+    <Property Name="Concepto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DiasVencidos" Type="Int32" />
+    <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+    <Property Name="Subtotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Iva" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Descuento" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Proveedor_Id" Type="Int32" Nullable="false" />
+    <Property Name="EstadoFactura_Id" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Retencion" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="estadofactura" Relationship="dbOpenGateModel.factura_estadofacturas_fk" FromRole="factura" ToRole="estadofactura" />
+    <NavigationProperty Name="proveedor" Relationship="dbOpenGateModel.factura_proveedor_fk" FromRole="factura" ToRole="proveedor" />
+  </EntityType>
+  <Association Name="factura_estadofacturas_fk">
+    <End Type="dbOpenGateModel.estadofactura" Role="estadofactura" Multiplicity="1" />
+    <End Type="dbOpenGateModel.factura" Role="factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estadofactura">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="factura">
+        <PropertyRef Name="EstadoFactura_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="factura_proveedor_fk">
+    <End Type="dbOpenGateModel.proveedor" Role="proveedor" Multiplicity="1" />
+    <End Type="dbOpenGateModel.factura" Role="factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="factura">
+        <PropertyRef Name="Proveedor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_proveedor_datosgrafica_Result">
+    <Property Type="Int32" Name="Column1" Nullable="true" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+  </ComplexType>
+</Schema>

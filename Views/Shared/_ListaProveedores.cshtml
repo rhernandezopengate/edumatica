@@ -1,0 +1,67 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<OpenGateLogistics.Models.proveedor>
+
+@{
+    Layout = null;
+}
+
+<div id="contenedor">
+    <table class="table table-striped jambo_table bulk_action">
+        <thead>
+            <tr class="headings">
+                <th class="column-title">                    
+                    @Html.DisplayNameFor(model => model.First().RazonSocial)
+                </th>
+                <th class="column-title">
+                    @Html.DisplayNameFor(model => model.First().RFC)
+                </th>
+                <th class="column-title">
+                    Categoria
+                </th>
+                <th class="column-title">
+                    Estado
+                </th>
+                <th class="column-title">
+                    Nacionalidad
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RazonSocial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoriaproveedor.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estadoproveedor.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nacionalidadproveedor.descripcion)
+                </td>
+                <td>
+                    <button onclick="detalles(@item.id)" class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
+                    <button onclick="editar(@item.id)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button>
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", "proveedors", new { buscar = Request.QueryString["buscar"], page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+</div>
+
+<div id="show-modal" class="modal fade">
+    <div class="modal-dialog" id="mdialTamanio">
+        <div id="inner-show-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+

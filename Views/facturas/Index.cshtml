@@ -1,0 +1,163 @@
+﻿@model IEnumerable<OpenGateLogistics.Models.factura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#proveedores").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/facturas/Autotomplete",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        razonsocial: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.RazonSocial,
+                                value: item.RazonSocial
+                            };
+                        }))
+                    },
+                    error: function () {
+                        alert('something went wrong !');
+                    }
+                })
+            },
+            messages: {
+                noResults: "",
+                results: ""
+            }
+        });
+    })
+</script>
+
+<div class="x_title">
+    <h2>Facturas</h2>
+    <div class="clearfix"></div>
+</div>
+
+<div class="x_content">
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Factura Inicio">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Factura Fin">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Pago Inicio">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Factura Fin">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Vencimiento Fin">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Fecha Vencimiento Fin">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Numero de Factura">
+        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="proveedores" aria-describedby="proveedores" placeholder="Proveedores">
+        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+        @Html.DropDownList("EstadoFactura_Id", null, htmlAttributes: new { @class = "form-control has-feedback-left" })
+        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-12 col-sm-3 col-xs-12">
+        <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span> Buscar
+        </button>
+        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "facturas")'">
+            <span class="glyphicon glyphicon-plus-sign"></span> Agregar Nuevo Registro
+        </button>
+    </div>
+        
+    </div>
+    <table id="datatable" class="table table-striped jambo_table bulk_action">
+        <thead>
+            <tr class="headings">
+                <th class="column-title">
+                    Factura
+                </th>
+                <th class="column-title">
+                    Razon Social
+                </th>
+                <th class="column-title">
+                    Concepto
+                </th>
+                <th class="column-title">
+                    Estado
+                </th>
+                <th class="column-title">
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th class="column-title">
+                    DV
+                </th>
+                <th class="column-title">
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.proveedor.RazonSocial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concepto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estadofactura.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiasVencidos)
+                    </td>
+                    <td>
+                        <button onclick="editar(@item.id)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button onclick="detalles(@item.id)" class="btn btn-warning"><span class="glyphicon glyphicon-list-alt"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        }
+
+    </table>
+
+    <script src="~/Scripts/Operaciones.js"></script>
+
+    <link href="~/Content/ModalBig.css" rel="stylesheet" />
+
+    <div id="show-modal" class="modal fade">
+        <div class="modal-dialog" id="mdialTamanio">
+            <div id="inner-show-modal" class="modal-content">
+            </div>
+        </div>
+    </div>
+
+
+
